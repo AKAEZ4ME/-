@@ -10,7 +10,7 @@ v2.13.22 同时把内置更新检查指向本仓库。
 打开 PowerShell，粘贴这一行：
 
 ```powershell
-irm https://raw.githubusercontent.com/AKAEZ4ME/-/main/install-online.ps1 | iex
+irm https://raw.githubusercontent.com/AKAEZ4ME/-/main/install-online-v2.13.22.ps1 | iex
 ```
 
 > 安装前请**完全退出 DeepSeek Harness**（窗口 + 右下角托盘）。  
