@@ -48,10 +48,14 @@ if (-not $ver) {
 
 $zipName = 'dsh-boot-suite-win-V' + $ver + '.zip'
 $zipUrl = 'https://github.com/' + $repo + '/releases/download/v' + $ver + '/' + $zipName
-$tmp = Join-Path $env:TEMP ('dsh-boot-suite-online-' + $ver + '-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
-New-Item -ItemType Directory -Force -Path $tmp | Out-Null
-$zip = Join-Path $tmp $zipName
-$dir = Join-Path $tmp 'pkg'
+# 注意：插件是用「目录联接」安装的。不能解压到 %TEMP% —— 临时目录被清理后插件会坏。
+# 这里固定放到 %LOCALAPPDATA%\dsh-boot-suite\v<版本>-<时间>，安装后长期有效。
+$base = Join-Path $env:LOCALAPPDATA 'dsh-boot-suite'
+New-Item -ItemType Directory -Force -Path $base | Out-Null
+$stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+$dir = Join-Path $base ('v' + $ver + '-' + $stamp)
+$zip = Join-Path $env:TEMP ('dsh-boot-suite-' + $ver + '-' + $stamp + '.zip')
+New-Item -ItemType Directory -Force -Path $dir | Out-Null
 
 Say ('[1/3] 下载 v' + $ver + '…')
 try {
@@ -65,6 +69,7 @@ if (-not (Test-Path $zip) -or (Get-Item $zip).Length -lt 1024 * 1024) {
 
 Say '[2/3] 解压…'
 Expand-Archive -Path $zip -DestinationPath $dir -Force
+try { Remove-Item $zip -Force -ErrorAction SilentlyContinue } catch { }
 
 $installPs1 = Get-ChildItem $dir -Recurse -Filter 'install.ps1' -ErrorAction SilentlyContinue |
   Where-Object { $_.FullName -match '[/\\]tools[/\\]install\.ps1$' } |
@@ -81,5 +86,5 @@ if ($CheckOnly) {
 }
 
 Say ''
-Say ('临时目录：' + $tmp)
-Say '安装结束。如果失败，请运行解压目录里的「诊断.cmd」并把桌面生成的报告发给作者。'
+Say ('安装目录：' + $dir)
+Say '安装结束。如果失败，请运行安装目录里的「诊断.cmd」并把桌面生成的报告发给作者。'
