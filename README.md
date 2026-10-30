@@ -5,14 +5,31 @@
 本次包含 **「开场插入音频」**：可选自己的音乐，随开场动画淡入，在终幕/退场时淡出；支持音量、淡入、淡出、循环。  
 v2.13.22 同时把内置更新检查指向本仓库。
 
-## 下载
+## 一键安装（PowerShell）
+
+打开 PowerShell，粘贴这一行：
+
+```powershell
+irm https://raw.githubusercontent.com/AKAEZ4ME/-/main/install-online.ps1 | iex
+```
+
+> 安装前请**完全退出 DeepSeek Harness**（窗口 + 右下角托盘）。  
+> 脚本会自动下载最新 Release、解压并启动安装器；中途失败可重新运行。
+
+## 手动下载
 
 - [Windows 完整安装包](https://github.com/AKAEZ4ME/-/releases/download/v2.13.22/dsh-boot-suite-win-V2.13.22.zip)（29.16 MB）
 - [npm / 插件市场包](https://github.com/AKAEZ4ME/-/releases/download/v2.13.22/dsh-boot-suite.tgz)（21.17 MB）
 - [完整发布说明](https://github.com/AKAEZ4ME/-/releases/download/v2.13.22/RELEASE-NOTES-2.13.22.md)
 - [SHA-256 校验值](https://github.com/AKAEZ4ME/-/releases/download/v2.13.22/SHA256SUMS.txt)
 
-## Windows 安装
+## 命令行 / 插件市场
+
+```powershell
+dsh plugin add https://github.com/AKAEZ4ME/-/releases/download/v2.13.22/dsh-boot-suite.tgz
+```
+
+## Windows 手动安装
 
 1. 解压到一个固定目录（不要放临时目录）
 2. **完全退出 DeepSeek Harness**（窗口 + 托盘）
